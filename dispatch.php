@@ -1,3 +1,17 @@
+<?php
+require_once "db.php";
+$conn = new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_DATABASE);
+$sql = "SELECT * FROM incident_type";
+$result = $conn->query($sql);
+$incidentTypes = [];
+while($row = $result->fetch_assoc()){
+    $id = $row["incident_type_id"];
+	$type = $row["incident_type_desc"];
+	$incidentType = ["id"=>$id, "type"=>$type];
+	array_push($incidentTypes, $incidentType);
+}
+$conn->close();
+?>
 <!doctype html>
 <html>
 <head>
@@ -15,11 +29,25 @@
 <div class="container" style="width: 930px">
 		<header>
 			<img src="images/banner.jpg" width="900" height="200" alt="" />
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active"> <a class="nav-link" href="logcall.php">Home <span class="sr-only">(current)</span></a> </li>
+          <li class="nav-item"> <a class="nav-link" href="dispatch.php">Dispatch</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="search.php">Update</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="history.php">History</a> </li>
+          <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Reports </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown1"> <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a> </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
 		</header>
 	
-      <?php
-        require_once 'nav.php';
-        ?>
+     
       
        <section style="margin-top: 20px">
 			<form action="dispatch.php" method="post">
@@ -28,9 +56,8 @@
 						Name </label>
 					<div class="col-sm-8">
 						<span id="callerName">
-                     		<?php echo $callerName;?>
-                     		<input type="text" name="callerName"
-							id="callerName" value="<?php echo $callerName;?>">
+                     	<input type="text" name="callerName"
+							id="callerName" value="">
 						</span>
 					</div>
 				</div>
@@ -40,9 +67,8 @@
 					</label>
 					<div class="col-sm-8">
 						<span id="contactNo">
-                     		<?php echo $contactNo;?>
-                     		<input type="hidden" name="contactNo"
-							id="contactNo" value="<?php echo $contactNo;?>">
+                     	<input type="text" name="contactNo"
+							id="contactNo" value="">
 						</span>
 					</div>
 				</div>
@@ -52,9 +78,8 @@
 						Location of Incident: </label>
 					<div class="col-sm-8">
 						<span id="locationOfIncident">
-                     		<?php echo $locationOfIncident;?>
-                     			<input type="hidden" name="locationOfIncident"
-							id="locationOfIncident" value="<?php echo $locationOfIncident;?>">
+                     	<input type="text" name="locationOfIncident"
+							id="locationOfIncident" value="">
 						</span>
 					</div>
 				</div>
@@ -64,9 +89,8 @@
 						of Incident: </label>
 					<div class="col-sm-8">
 						<span id="typeOfIncident">
-                     		<?php echo $typeOfIncident;?>
-                     		<input type="hidden" name="typeOfIncident"
-							id="typeOfIncident" value="<?php echo $typeOfIncident;?>">
+                        <input type="text" name="typeOfIncident"
+							id="typeOfIncident" value="">
 						</span>
 					</div>
 				</div>
@@ -76,10 +100,9 @@
 						Description of Incident: </label>
 					<div class="col-sm-8">
 						<span id="descriptionOfIncident">
-                     		<?php echo $descriptionOfincident;?>
-                     		<input type="hidden" name="descriptionOfIncident"
+                     	<input type="text" name="descriptionOfIncident"
 							id="descriptionOfIncident"
-							value="<?php echo $descriptionOfincident;?>">
+							value="">
 						</span>
 					</div>
 				</div>
@@ -95,7 +118,27 @@
 									<th>Status</th>
 									<th></th>
 								</tr>
-								
+								<tr>
+								<td>SJA667A</td>
+								<td>Free</td>
+								<td>
+								<input type="checkbox" name="cbCarSelection[]">	
+								</td>
+								</tr>
+								<tr>
+								<td>SGA8765A</td>
+								<td>Free</td>
+								<td>
+								<input type="checkbox" name="cbCarSelection[]">	
+								</td>
+								</tr>
+								<tr>
+								<td>SJE5564A</td>
+								<td>Free</td>
+								<td>
+								<input type="checkbox" name="cbCarSelection[]">	
+								</td>
+								</tr>
                      		
                      		</tbody>
 						</table>
